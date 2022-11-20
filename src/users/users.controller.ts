@@ -13,13 +13,18 @@ import {
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UsersService } from './users.service';
+import { UserType } from './types/user.type';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(@Req() req: Request, @Res() res: Response) {
+  async create(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Body() body: UserType,
+  ) {
     const newUser = await this.usersService.createUser(req.body);
     return res.status(HttpStatus.OK).json(newUser);
   }
