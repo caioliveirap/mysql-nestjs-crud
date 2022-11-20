@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
 require('dotenv').config();
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
     TypeOrmModule.forRoot({
       type: process.env.TYPE as any,
       host: process.env.HOST,
@@ -13,9 +17,10 @@ require('dotenv').config();
       username: process.env.USER,
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
-      entities: [],
+      entities: [process.env.TYPEORM_ENTITIES],
       synchronize: process.env.SYNC as unknown as boolean,
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
