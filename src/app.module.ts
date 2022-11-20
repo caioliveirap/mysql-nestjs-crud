@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'mysql-nestjs-crud',
+      type: process.env.TYPE as any,
+      host: process.env.HOST,
+      port: Number.parseInt(process.env.DATABASE_PORT),
+      username: process.env.USER,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
       entities: [],
-      synchronize: true,
+      synchronize: process.env.SYNC as unknown as boolean,
     }),
   ],
   controllers: [AppController],
