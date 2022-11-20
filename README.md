@@ -19,3 +19,4 @@ It's a simple Rest API using nestjs and MySQL as a database. Here in this projec
 - [ ] Create migrations
 - [ ] Include HTTP best practices
 - [ ] Include JSON customized responses
+- [ ] Include Unit Tests
