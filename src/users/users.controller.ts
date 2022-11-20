@@ -7,11 +7,10 @@ import {
   Param,
   Delete,
   HttpCode,
-  Req,
   Res,
   HttpStatus,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { UsersService } from './users.service';
 import { UserType } from './types/user.type';
 
@@ -20,17 +19,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(
-    @Req() req: Request,
-    @Res() res: Response,
-    @Body() body: UserType,
-  ) {
-    const newUser = await this.usersService.createUser(req.body);
+  async create(@Res() res: Response, @Body() body: UserType) {
+    const newUser = await this.usersService.createUser(body);
     return res.status(HttpStatus.OK).json(newUser);
   }
 
   @Get()
-  async findAll(@Req() req: Request, @Res() res: Response) {
+  async findAll(@Res() res: Response) {
     const allUsers = await this.usersService.findAll();
     return res.status(HttpStatus.OK).json(allUsers);
   }
@@ -44,10 +39,10 @@ export class UsersController {
   @Patch(':id')
   async updateUser(
     @Param('id') id: string,
-    @Req() req: Request,
     @Res() res: Response,
+    @Body() body: UserType,
   ) {
-    const updatedUser = await this.usersService.updateUser(+id, req.body.user);
+    const updatedUser = await this.usersService.updateUser(+id, body);
     return res.status(HttpStatus.OK).json(updatedUser);
   }
 
