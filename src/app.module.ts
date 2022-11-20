@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
 require('dotenv').config();
 
 @Module({
@@ -16,6 +17,7 @@ require('dotenv').config();
       entities: [],
       synchronize: process.env.SYNC as unknown as boolean,
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
