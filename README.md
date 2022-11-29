@@ -15,7 +15,7 @@ It's a simple Rest API using nestjs and MySQL as a database. Here in this projec
 
 ### Next steps:
 
-- [ ] Dockerize the components
+- [x] Dockerize the components
 - [ ] Create migrations
 - [ ] Include HTTP best practices
 - [ ] Include JSON customized responses
