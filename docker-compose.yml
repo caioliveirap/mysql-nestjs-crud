@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql_app
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mysql-nestjs-crud
+    ports:
+      - '3308:3306'
+    volumes:
+      - ./src/database:/app/api
+  redis:
+    container_name: myapp_redis
+    restart: always
+    image: redis:6.0-alpine
+    expose:
+      - '6379'
+    volumes:
+      - ./src/database:/app/redis
+  backend:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+    command: npm run start:dev
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_DATABASE=mysql-nestjs-crud
+      - DB_PORT=3306
+      - WAIT_HOSTS=db:3306
